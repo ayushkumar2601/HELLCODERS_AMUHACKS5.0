@@ -62,7 +62,7 @@ export default function Home() {
                 AI-DRIVEN ACADEMIC EXCELLENCE
               </BrutalBadge>
               <h1 className="text-5xl md:text-7xl font-black tracking-tighter text-black leading-[0.95] mb-8">
-                THE INTELLIGENCE LAYER FOR <span className="bg-brutal-accent text-white px-2">STUDENT SUCCESS</span>
+                THE INTELLIGENCE LAYER FOR STUDENT SUCCESS
               </h1>
               <p className="text-lg md:text-xl text-black font-medium mb-10 leading-relaxed">
                 Transform institutional performance with personalized study protocols, predictive career roadmaps, and deep academic AI insights.
