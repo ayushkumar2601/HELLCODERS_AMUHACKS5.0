@@ -87,7 +87,7 @@ export default function StudentDashboardClient({ user, dashboardData }: StudentD
                   <Sparkles className="w-6 h-6 text-primary" />
                 </div>
                 <div>
-                  <p className="font-black text-slate-900 tracking-tight">Welcome back, {user.profile.full_name}!</p>
+                  <p className="font-black text-slate-900 tracking-tight">Welcome back, {user.profile?.full_name || user.user.email}!</p>
                   <p className="text-sm text-slate-600 font-medium tracking-tight">Keep up the great work this semester!</p>
                 </div>
               </div>
@@ -102,7 +102,7 @@ export default function StudentDashboardClient({ user, dashboardData }: StudentD
             <div>
               <p className="text-secondary font-black text-xs uppercase tracking-[0.3em] mb-3">Student Growth Portal</p>
               <h1 className="text-4xl font-black tracking-tighter text-slate-900 mb-2">Personal Growth Dashboard</h1>
-              <p className="text-muted-foreground font-medium">Tracking Semester {student.semester} • {student.department}</p>
+              <p className="text-muted-foreground font-medium">Tracking Semester {student.semester || 1} • {student.department || 'Computer Science'}</p>
             </div>
             <div className="flex gap-3">
               <Button 
@@ -148,10 +148,10 @@ export default function StudentDashboardClient({ user, dashboardData }: StudentD
           {/* Key Metrics */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
             {[
-              { label: 'Current GPA', value: student.gpa.toFixed(2), icon: BarChart3, color: 'text-primary', bg: 'bg-primary/10', trend: 'This semester' },
-              { label: 'Career Ready', value: student.career_score + '%', icon: Target, color: 'text-secondary', bg: 'bg-secondary/10', trend: prediction ? `${prediction.placement_probability}% placement` : 'Calculating...' },
-              { label: 'Stress Index', value: student.stress_index + '%', icon: AlertCircle, color: 'text-yellow-600', bg: 'bg-yellow-500/10', trend: student.stress_index > 70 ? 'High' : 'Moderate' },
-              { label: 'Study Streak', value: student.study_streak + ' Days', icon: Zap, color: 'text-orange-500', bg: 'bg-orange-500/10', trend: 'Keep it up!' },
+              { label: 'Current GPA', value: (student.gpa || 0).toFixed(2), icon: BarChart3, color: 'text-primary', bg: 'bg-primary/10', trend: 'This semester' },
+              { label: 'Career Ready', value: (student.career_score || 0) + '%', icon: Target, color: 'text-secondary', bg: 'bg-secondary/10', trend: prediction ? `${prediction.placement_probability}% placement` : 'Calculating...' },
+              { label: 'Stress Index', value: (student.stress_index || 0) + '%', icon: AlertCircle, color: 'text-yellow-600', bg: 'bg-yellow-500/10', trend: (student.stress_index || 0) > 70 ? 'High' : 'Moderate' },
+              { label: 'Study Streak', value: (student.study_streak || 0) + ' Days', icon: Zap, color: 'text-orange-500', bg: 'bg-orange-500/10', trend: 'Keep it up!' },
             ].map((stat, i) => (
               <Card key={i} className="glass-card p-6 group hover:translate-y-[-4px] transition-all duration-300">
                 <div className="flex items-center justify-between mb-4">
@@ -291,7 +291,7 @@ export default function StudentDashboardClient({ user, dashboardData }: StudentD
                 <div className="space-y-6">
                   <div className="relative pl-6 border-l-2 border-slate-100">
                     <div className="absolute -left-[5px] top-0 w-2 h-2 rounded-full bg-primary" />
-                    <h4 className="text-sm font-bold text-slate-800">Improve GPA to {(student.gpa + 0.5).toFixed(1)}</h4>
+                    <h4 className="text-sm font-bold text-slate-800">Improve GPA to {((student.gpa || 0) + 0.5).toFixed(1)}</h4>
                     <p className="text-xs text-muted-foreground mt-1">Target for next semester</p>
                   </div>
                   <div className="relative pl-6 border-l-2 border-slate-100 opacity-50">
