@@ -82,6 +82,12 @@ export default function SignUpPage() {
         setIsSubmitting(false)
       }
     } catch (error: any) {
+      // Check if it's a redirect (which is actually success)
+      if (error?.message?.includes('NEXT_REDIRECT')) {
+        setShowVerificationMessage(true)
+        setIsSubmitting(false)
+        return
+      }
       console.error('Signup error:', error)
       setErrors({ general: error.message || 'An unexpected error occurred. Please try again.' })
       setIsSubmitting(false)
