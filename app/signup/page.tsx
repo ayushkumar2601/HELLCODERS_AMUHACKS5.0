@@ -16,7 +16,6 @@ export default function SignUpPage() {
     email: '',
     password: '',
     confirmPassword: '',
-    role: 'student' as 'student' | 'admin',
     department: 'Computer Science',
   })
 
@@ -74,7 +73,6 @@ export default function SignUpPage() {
         email: formData.email,
         password: formData.password,
         fullName: formData.name,
-        role: formData.role,
         department: formData.department,
       })
 
@@ -157,65 +155,22 @@ export default function SignUpPage() {
                 )}
               </div>
 
-              {/* Role Selection */}
+              {/* Department Selection */}
               <div>
-                <label className="block text-sm font-medium mb-3">I am a</label>
-                <div className="space-y-2">
-                  <label className="flex items-center gap-3 p-3 border border-border rounded-lg cursor-pointer hover:bg-card/50 transition"
-                    style={{
-                      backgroundColor: formData.role === 'student' ? 'var(--primary)' : 'transparent',
-                      borderColor: formData.role === 'student' ? 'var(--primary)' : 'var(--border)',
-                    }}>
-                    <input
-                      type="radio"
-                      name="role"
-                      value="student"
-                      checked={formData.role === 'student'}
-                      onChange={(e) => setFormData({ ...formData, role: e.target.value as 'student' | 'admin' })}
-                      className="w-4 h-4"
-                    />
-                    <span className={formData.role === 'student' ? 'text-primary-foreground font-semibold' : ''}>
-                      Student
-                    </span>
-                  </label>
-                  <label className="flex items-center gap-3 p-3 border border-border rounded-lg cursor-pointer hover:bg-card/50 transition"
-                    style={{
-                      backgroundColor: formData.role === 'admin' ? 'var(--primary)' : 'transparent',
-                      borderColor: formData.role === 'admin' ? 'var(--primary)' : 'var(--border)',
-                    }}>
-                    <input
-                      type="radio"
-                      name="role"
-                      value="admin"
-                      checked={formData.role === 'admin'}
-                      onChange={(e) => setFormData({ ...formData, role: e.target.value as 'student' | 'admin' })}
-                      className="w-4 h-4"
-                    />
-                    <span className={formData.role === 'admin' ? 'text-primary-foreground font-semibold' : ''}>
-                      Institution Admin
-                    </span>
-                  </label>
-                </div>
+                <label className="block text-sm font-medium mb-2">Department</label>
+                <select
+                  name="department"
+                  value={formData.department}
+                  onChange={handleChange}
+                  className="w-full h-11 px-4 border border-border rounded-lg focus:border-primary/30 focus:outline-none bg-background"
+                >
+                  <option value="Computer Science">Computer Science</option>
+                  <option value="Electronics">Electronics & Communication</option>
+                  <option value="Mechanical">Mechanical Engineering</option>
+                  <option value="Civil">Civil Engineering</option>
+                  <option value="Electrical">Electrical Engineering</option>
+                </select>
               </div>
-
-              {/* Department Selection (only for students) */}
-              {formData.role === 'student' && (
-                <div>
-                  <label className="block text-sm font-medium mb-2">Department</label>
-                  <select
-                    name="department"
-                    value={formData.department}
-                    onChange={handleChange}
-                    className="w-full h-11 px-4 border border-border rounded-lg focus:border-primary/30 focus:outline-none bg-background"
-                  >
-                    <option value="Computer Science">Computer Science</option>
-                    <option value="Electronics">Electronics & Communication</option>
-                    <option value="Mechanical">Mechanical Engineering</option>
-                    <option value="Civil">Civil Engineering</option>
-                    <option value="Electrical">Electrical Engineering</option>
-                  </select>
-                </div>
-              )}
 
               {/* Password Input */}
               <div>

@@ -8,7 +8,6 @@ export async function signUp(formData: {
   email: string
   password: string
   fullName: string
-  role: 'student' | 'admin'
   department?: string
 }) {
   try {
@@ -20,7 +19,7 @@ export async function signUp(formData: {
       options: {
         data: {
           full_name: formData.fullName,
-          role: formData.role,
+          role: 'student', // Always student
           department: formData.department || 'Computer Science',
         },
       },
@@ -36,13 +35,7 @@ export async function signUp(formData: {
     }
 
     revalidatePath('/', 'layout')
-    
-    // Redirect based on role
-    if (formData.role === 'admin') {
-      redirect('/dashboard/admin')
-    } else {
-      redirect('/dashboard/student')
-    }
+    redirect('/dashboard/student')
   } catch (error: any) {
     console.error('Signup exception:', error)
     return { error: error.message || 'An unexpected error occurred during signup' }
@@ -50,31 +43,23 @@ export async function signUp(formData: {
 }
 
 export async function signIn(formData: { email: string; password: string }) {
-  const supabase = await createClient()
+  try {
+    const supabase = await createClient()
 
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email: formData.email,
-    password: formData.password,
-  })
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: formData.email,
+      password: formData.password,
+    })
 
-  if (error) {
-    return { error: error.message }
-  }
+    if (error) {
+      return { error: error.message }
+    }
 
-  // Get user role
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('role')
-    .eq('id', data.user.id)
-    .single()
-
-  revalidatePath('/', 'layout')
-
-  // Redirect based on role
-  if (profile?.role === 'admin') {
-    redirect('/dashboard/admin')
-  } else {
+    revalidatePath('/', 'layout')
     redirect('/dashboard/student')
+  } catch (error: any) {
+    console.error('Login exception:', error)
+    return { error: error.message || 'An unexpected error occurred during login' }
   }
 }
 

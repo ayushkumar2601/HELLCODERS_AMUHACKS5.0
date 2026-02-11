@@ -95,9 +95,9 @@ export default function Home() {
                     Start Now <ChevronRight className="w-5 h-5 ml-2" />
                   </Button>
                 </Link>
-                <Link href="/login?role=admin">
+                <Link href="/login">
                   <Button variant="outline" className="w-full sm:w-auto bg-white/50 backdrop-blur rounded-2xl font-black px-10 h-14 text-lg border-2 border-slate-200 hover:bg-white transition-all">
-                    Institutional Portal
+                    Login
                   </Button>
                 </Link>
               </div>
